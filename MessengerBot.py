@@ -29,12 +29,11 @@ class MessengerBotGPT:
         ignoreTxt = messages_element[-1].text if messages_element else ""
         while True:
             messages_element = self.driver.find_elements(By.CSS_SELECTOR, '.xcrg951.x1r145dm')
-            last_message = messages_element[-1].text if messages_element else ""
-            if last_message == ignoreTxt: # Caso a ultima mensagem for igual ao texto ignorado no começo da função, o loop volta para o começo e fica esperando uma mensagem diferente.
+            if (last_message := messages_element[-1].text if messages_element else "") == ignoreTxt: # Caso a ultima mensagem for igual ao texto ignorado no começo da função, o loop volta para o começo e fica esperando uma mensagem diferente.
                 continue
             else:
-                Resposta = self.BotGPT.Question(last_message) # Manda a mensagem para o método "Question(msg:str)" da classe "ChatBot" e obtém uma resposta.
-                if Resposta: # Caso retorne uma resposta válida, manda para o usuário.
+# Manda a mensagem para o método "Question(msg:str)" da classe "ChatBot" e obtém uma resposta.
+                if Resposta := self.BotGPT.Question(last_message): # Caso retorne uma resposta válida, manda para o usuário.
                     self.wait.until(EC.presence_of_element_located((By.XPATH, msginputXPATH)))
                     msginput = self.driver.find_element(By.XPATH, msginputXPATH)
                     msginput.send_keys(Resposta)

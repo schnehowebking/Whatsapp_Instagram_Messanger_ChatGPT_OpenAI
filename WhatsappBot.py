@@ -34,8 +34,8 @@ class WhatsAppBotGPT:
             time.sleep(1)  # Aguarda 1 segundo entre cada verificação
             elements = self.driver.find_elements(By.XPATH, f"//span[@data-testid='conversation-info-header-chat-title']") # Encontra o elemento que contem o nome da pessoa
             Name = f"{elements[0].text}:" # Extrai o nome da pessoa
-            divs = self.driver.find_elements(By.XPATH, f"//div[contains(@data-pre-plain-text, '{Name}')]") # Pegando os divs responsáveis por conter as mensagens do usuário
-            if divs:
+# Pegando os divs responsáveis por conter as mensagens do usuário
+            if divs := self.driver.find_elements(By.XPATH, f"//div[contains(@data-pre-plain-text, '{Name}')]"):
                 last_parent = divs[-1] # Obtendo o div mais recente
                 child_elements = last_parent.find_elements(By.XPATH, "./*[not(contains(@class, '_1hl2r'))]") # Obtendo os elementos filhos do Div
                 last_child = child_elements[-1] # Obtendo elemento mais recente
