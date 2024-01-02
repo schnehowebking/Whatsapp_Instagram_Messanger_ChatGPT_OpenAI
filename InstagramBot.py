@@ -28,12 +28,12 @@ class InstagramBotGPT:
         while True:
             self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, "_acqu")))
             messages_element = self.driver.find_elements(By.CLASS_NAME, "_acqu") # Obtem as mensagens do usuario alvo
-            last_message = messages_element[-1].text if messages_element else "" # Obtendo a ultima mensagem do usuario alvo
-            if last_message == ignoreTxt: # Caso a ultima mensagem for igual ao texto ignorado no começo da função, o loop volta para o começo e fica esperando uma mensagem diferente.
+# Obtendo a ultima mensagem do usuario alvo
+            if (last_message := messages_element[-1].text if messages_element else "") == ignoreTxt: # Caso a ultima mensagem for igual ao texto ignorado no começo da função, o loop volta para o começo e fica esperando uma mensagem diferente.
                 continue
             else:
-                Resposta = self.BotGPT.Question(last_message) # Manda a mensagem para o método "Question(msg:str)" da classe "ChatBot" e obtém uma resposta.
-                if Resposta: # Caso retorne uma resposta válida, manda para o usuário.
+# Manda a mensagem para o método "Question(msg:str)" da classe "ChatBot" e obtém uma resposta.
+                if Resposta := self.BotGPT.Question(last_message): # Caso retorne uma resposta válida, manda para o usuário.
                     msginput.clear()
                     msginput.send_keys(Resposta)
                     msginput.send_keys(Keys.ENTER)
