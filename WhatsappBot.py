@@ -32,7 +32,7 @@ class WhatsAppBotGPT:
         self.messages = list() # Inicializa a lista de mensagens
         while True: # Loop infinito para verificar novas mensagens
             time.sleep(1)  # Aguarda 1 segundo entre cada verificação
-            elements = self.driver.find_elements(By.XPATH, f"//span[@data-testid='conversation-info-header-chat-title']") # Encontra o elemento que contem o nome da pessoa
+            elements = self.driver.find_elements(By.XPATH, "//span[@data-testid='conversation-info-header-chat-title']") # Encontra o elemento que contem o nome da pessoa
             Name = f"{elements[0].text}:" # Extrai o nome da pessoa
 # Pegando os divs responsáveis por conter as mensagens do usuário
             if divs := self.driver.find_elements(By.XPATH, f"//div[contains(@data-pre-plain-text, '{Name}')]"):
@@ -44,7 +44,7 @@ class WhatsAppBotGPT:
                     resposta = self.Conversa.Question(text) # Manda a última mensagem do usuário para o método "Question" da classe "ChatBot"
                     if resposta: # Verifica o método 'Question' retornou uma resposta
                         time.sleep(2) # Aguarda 2 segundos, tornando o script mais humano
-                        elemento = self.driver.find_element(By.XPATH, f'//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div/p') # Obtendo elemento responsável por mandar as mensagens
+                        elemento = self.driver.find_element(By.XPATH, '//*[@id="main"]/footer/div[1]/div/span[2]/div/div[2]/div[1]/div/div/p') # Obtendo elemento responsável por mandar as mensagens
                         elemento.clear() # Limpa a mensagem (Pratica comum para evitar mensagens não intencionais)
                         elemento.send_keys(resposta) # Escreve a mensagem no elemento
                         time.sleep(1) # Aguarda mais 1 segundo
